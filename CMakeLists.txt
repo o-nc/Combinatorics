@@ -9,7 +9,8 @@ target_include_directories(Combinatorics PUBLIC include
 
 add_subdirectory(external/googletest)
 add_executable(unittests
-        tests/LockfreeCounter.test.cpp)
+        tests/LockfreeCounter.test.cpp
+        tests/Iteration.test.cpp)
 target_link_libraries(unittests gtest gtest_main Combinatorics)
 target_include_directories(unittests PUBLIC include
         ${PROJECT_SOURCE_DIR}/src)
