@@ -11,9 +11,11 @@ add_subdirectory(external/googletest)
 add_executable(unittests
         tests/LockfreeCounter.test.cpp
         tests/Iteration.test.cpp
-        tests/Reel.test.cpp
         tests/Symbol.test.cpp
-        tests/Display.test.cpp)
+        tests/Reel.test.cpp
+        tests/Display.test.cpp
+        tests/TestignObjects.cpp)
 target_link_libraries(unittests gtest gtest_main Combinatorics)
 target_include_directories(unittests PUBLIC include
-        ${PROJECT_SOURCE_DIR}/src)
+        ${PROJECT_SOURCE_DIR}/src
+        ${PROJECT_SOURCE_DIR}/tests)

@@ -18,7 +18,7 @@ namespace combis {
         bool operator==(Stop const& other) const { return s == other.s and w == other.w; }
     };
     using Stops = std::vector<Stop>;
-    inline Stops createStops(std::vector<std::size_t> const& ids, std::vector<weight> const& weights) {
+    inline Stops createStops(std::vector<std::size_t> const& ids, std::vector<weight> const& weights ={}) {
         // precondition: either weights is empty, in which case all weights are set to 1, or has the same size as ids
         Stops stops;
         stops.reserve(ids.size());

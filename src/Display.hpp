@@ -40,6 +40,7 @@ namespace combis {
         	// as the stop chosen is at offset 0, we must use the weight at offset 0, not the weight at the offset of the symbol
             return {reels[reel_index][offset].s, reels[reel_index][0].w};
         }
+        void set_position(std::size_t const reel_index, position const p) { reels[reel_index].current = p; }
     };
 
 }
