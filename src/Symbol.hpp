@@ -27,14 +27,18 @@ namespace combis {
         static Symbol const& get(std::size_t const id, std::vector<out> outs = {}, std::vector<std::size_t> wild_for = {}, bool const scattered = false) {
             // precondition, the symbols are created in increasing order of id, without skipping an id.
             static std::vector<Symbol> symbols;
-            if (id < symbols.size())
+            if (symbols.empty())
+                symbols.reserve(100); // prevent reallocation when the vector grows, which would deallocate all the previous references
+            static std::size_t size = 0;
+            if (id < size)
                 return symbols[id];
             Symbol s(id, std::move(outs), std::move(wild_for), scattered);
             symbols.push_back(std::move(s));
+            ++size;
             return symbols.back();
         }
     private:
-        Symbol(std::size_t const id, std::vector<out> outs, std::vector<std::size_t> wild_for, bool const scattered = false)
+        Symbol(std::size_t const id, std::vector<out>&& outs, std::vector<std::size_t>&& wild_for, bool const scattered = false)
             : id(id), binary(1 << id), wild(to_wild(id, std::move(wild_for))), scattered(scattered), outs(std::move(outs)) {}
 
         static std::size_t to_wild(std::size_t const id, std::vector<std::size_t> wild_for) {

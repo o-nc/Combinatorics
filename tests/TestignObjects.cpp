@@ -3,6 +3,7 @@
 
 using namespace combis;
 
+// testing objects based on the Excel file
 auto const& s0 = Symbol::get(0); // unused
 Symbol const& s1 = Symbol::get(1, {0, 0, 0, 5, 10, 50});
 Symbol const& s2 = Symbol::get(2, {0, 0, 0, 5, 10, 50});
@@ -14,8 +15,8 @@ Symbol const& s7 = Symbol::get(7, {0, 0, 0, 5, 25, 100});
 Symbol const& s8 = Symbol::get(8, {0, 0, 0, 5, 30, 100});
 Symbol const& s9 = Symbol::get(9, {0, 0, 2, 10, 50, 150});
 Symbol const& s10 = Symbol::get(10, {}, {1, 2, 3, 4, 5, 6, 7, 8, 9});
-Symbol const& s11 = Symbol::get(11);
-Symbol const& s12 = Symbol::get(12, {0, 0, 0, 2, 15, 100}); // this should be time the total bet, all the other are time the bet per line
+Symbol const& s11 = Symbol::get(11, {}, {}, true);
+Symbol const& s12 = Symbol::get(12, {0, 0, 0, 2, 15, 100}, {}, true); // this should be time the total bet, all the other are time the bet per line
 
 std::vector<std::size_t> ids1 {7,8,4,1,8,4,5,1,4,8,1,7,6,4,9,7,5,12,2,3,8,4,2,8,1,7,2,8,9,2,7,6,2,1,4,7,2,1,3,6,2,11,11,4,9,7,5,1,7,8,2,4,9,1,8,2,1,7,12,11,11,11,4,1};
 Reel reel1(std::move(createStops(std::move(ids1), {})));
@@ -41,7 +42,29 @@ Reel reel10(std::move(createStops(std::move(ids10), {})));
 Reels reels_1_5 {std::move(reel1), std::move(reel2), std::move(reel3), std::move(reel4), std::move(reel5)};
 Reels reels_6_10 {std::move(reel6), std::move(reel7), std::move(reel8), std::move(reel9), std::move(reel10)};
 Display::Heights const heights(5, 3); // five reels, each of height three
-std::size_t const scattered = (1 << 11) | (1 << 12);
+constexpr std::size_t scattered = (1 << 11) | (1 << 12);
 
 Display display_base(reels_1_5, heights, scattered);
 Display display_free(reels_6_10, heights, scattered);
+
+
+// testing objects for a small toy game
+
+Symbol const& s13 = Symbol::get(13, {0, 0, 1, 5});
+Symbol const& s14 = Symbol::get(14, {0, 0, 1, 5});
+Symbol const& s15 = Symbol::get(15, {0, 0, 2, 10});
+Symbol const& s16 = Symbol::get(16, {0, 0, 3, 15}, {}, true);
+
+Reel reel11(createStops({13,14,15,16}, {1,1,1,1}));
+Reel reel12(createStops({13,14,15,16,14,13,15,14}, {3,3,2,1,3,3,2,3}));
+Reel reel13(createStops({13,14,15,16}, {3,3,2,1}));
+Reel reel14(createStops({13,14,15,16}, {3,3,2,1}));
+Reels reels_small {std::move(reel11), std::move(reel12), std::move(reel13), std::move(reel14)};
+
+constexpr std::size_t scattered_small = (1 << 16);
+Display::Heights const heights_small(4, 3); // five reels, each of height three
+Display display_small(reels_small, heights_small, scattered_small);
+
+Game::Paylines paylines_small{{{0,3,6,9}},{{1,4,7,8}},{{2,5,8,10}},{{1,3,6,9}},{{0,3,7,9}}};
+constexpr std::size_t bet_small = 5;
+Game game_small(paylines_small, display_small, bet_small);

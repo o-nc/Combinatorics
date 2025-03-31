@@ -1,7 +1,7 @@
 #ifndef COMBINATORICS_TESTINGOBJECTS_HPP
 #define COMBINATORICS_TESTINGOBJECTS_HPP
 
-#include "Display.hpp"
+#include "Game.hpp"
 
 extern combis::Symbol const& s1;
 extern combis::Symbol const& s2;
@@ -17,5 +17,13 @@ extern combis::Symbol const& s11;
 extern combis::Symbol const& s12;
 
 extern combis::Display display_base, display_free;
+
+extern combis::Symbol const& s13;
+extern combis::Symbol const& s14;
+extern combis::Symbol const& s15;
+extern combis::Symbol const& s16;
+extern combis::Display display_small;
+extern combis::Game game_small;
+
 
 #endif
