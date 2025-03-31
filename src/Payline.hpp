@@ -9,12 +9,13 @@ namespace combis {
     class Payline {
     	std::vector<position> const positions;
     public:
-        Payline(std::vector<position> positions) : positions(std::move(positions)) {} ;
-        out payout(Display const& d, bool const iterate = false) const {
-            auto const& [s, w]= d[positions[0]];
+        Payline(std::vector<position> positions) : positions(std::move(positions)) {}
+
+        out payout(Display const& d, std::vector<std::size_t> const& reels_stops = {}, bool const iterate = false) const {
+            auto const& [s, w]= d[positions[0], reels_stops];
             std::size_t count = 1, weight = w;
-            for (auto i = 1uz, size = positions.size(); i < size and (s.binary & d[positions[i]].first.wild) != 0; ++i) {
-                weight *=  d[positions[i]].second;
+            for (auto i = 1uz, size = positions.size(); i < size and (s.binary & d[positions[i], reels_stops].first.wild) != 0; ++i) {
+                weight *=  d[positions[i], reels_stops].second;
                 ++count;
             }
             // if we play the game or do MC, we want to get the outs as is

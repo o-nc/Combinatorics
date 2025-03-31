@@ -31,10 +31,9 @@ namespace combis {
     class Reel {
         Stops const stops;
     public:
-        position current = 0; // the position that is currently displayed on the topmost row of the reel
         weight const total_weight;
         explicit Reel(Stops const& stops) : stops(stops), total_weight(std::accumulate(stops.cbegin(), stops.cend(), 0, [](weight const& acc, Stop const& s) { return acc + s.w; })) {}
-        Stop const& operator[](std::size_t const offset) const { return stops[(current + offset) % stops.size()]; }
+        Stop const& operator[](std::size_t const offset) const { return stops[(offset) % stops.size()]; }
     };
     using Reels = std::vector<Reel>;
 

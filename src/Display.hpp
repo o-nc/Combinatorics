@@ -35,12 +35,14 @@ namespace combis {
       	Display(Reels& reels, Heights const& heights, Scattered const scattered)
             : reels(reels), heights(heights), scattered(scattered), display_size(std::accumulate(heights.cbegin(), heights.cend(), 1uz)) {}
 
-        std::pair<Symbol const&, weight const&> operator[](position const& p) const {
-        	auto const [reel_index, offset] = reel_index_offset(p);
+        std::pair<Symbol const&, weight const&> operator[](position const& p, std::vector<std::size_t> const& reels_stops = {}) const {
+        	auto const [reel_index, display_offset] = reel_index_offset(p);
+        	// keep the current position of all reels at 0, but change their position with an argument.
+        	// make the reels' accesses thread-safe by getting rid of the shared data.
+        	std::size_t const  reel_offset = reels_stops.empty() ? 0uz : reels_stops[reel_index];
         	// as the stop chosen is at offset 0, we must use the weight at offset 0, not the weight at the offset of the symbol
-            return {reels[reel_index][offset].s, reels[reel_index][0].w};
+            return {reels[reel_index][reel_offset + display_offset].s, reels[reel_index][reel_offset].w};
         }
-        void set_position(std::size_t const reel_index, position const p) { reels[reel_index].current = p; }
     };
 
 }
