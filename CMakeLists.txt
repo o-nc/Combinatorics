@@ -16,7 +16,7 @@ add_executable(unittests
         tests/Symbol.test.cpp
         tests/Reel.test.cpp
         tests/Display.test.cpp
-        tests/TestignObjects.cpp
+        tests/TestingObjects.cpp
         tests/Payline.test.cpp
         tests/Game.test.cpp)
 target_link_libraries(unittests gtest gtest_main Combinatorics)
