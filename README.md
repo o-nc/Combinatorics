@@ -21,4 +21,4 @@ See tests/TestingObjects.cpp and tests/Game.test.cpp to get an idea of how the l
 A unit test in Game.test.cpp replicates a game design for which statistics were computed in Excel. 
 The iteration over all reels' stops yield the same number of outs and the same RTP for the payline of this base game.
 This iteration (over a cycle of length 1470627840) currently takes around 25 seconds using 32 threads on as many physical cores.
-The library as not been optimized or even profiled yet however. So the 25 seconds currently needed are a bound on the time to iterate over a game of such size, not an estimate of the time needed for an optimized library.
+The library has not been optimized or even profiled yet, however. So the 25 seconds currently needed are a bound on the time to iterate over a game of such size, not an estimate of the time needed for an optimized library.
