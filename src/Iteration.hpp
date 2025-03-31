@@ -77,6 +77,8 @@ namespace combis {
     }
 
     std::size_t spin(std::size_t const up_to); // random iteration
+    // spin (random uniform over total_weight, then starting from 0, iterate until result <= cumulative_weight
+
 
     // permutations
     // combinations

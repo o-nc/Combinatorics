@@ -12,7 +12,7 @@
 using namespace combis;
 
 TEST(IterationTest, IterateAtomic) {
-    std::size_t up_to = 10'000uz;
+    constexpr std::size_t up_to= 10'000uz;
     auto const num_threads = std::thread::hardware_concurrency();
     iterate_atomic ia;
 
@@ -46,7 +46,7 @@ TEST(IterationTest, IterateAtomic) {
 }
 
 TEST(IterationTest, IndexToIndices) {
-    std::vector<std::size_t> reel_sizes = {100, 97, 91, 79}, expected_c_sizes = {69'733'300, 697'333, 7'189, 79};
+    std::vector<std::size_t> const reel_sizes = {100, 97, 91, 79}, expected_c_sizes = {69'733'300, 697'333, 7'189, 79};
     auto const c_sizes = cumulative_sizes(reel_sizes);
     EXPECT_EQ(c_sizes, expected_c_sizes);
 
@@ -65,8 +65,8 @@ TEST(IterationTest, IndexToIndices) {
 }
 
 TEST(IterationTest, MultiReelsIteration) {
-    std::vector<std::size_t> reel_sizes = {2, 3, 4};
-    std::vector<std::vector<std::size_t>> expected_indices = {
+    std::vector<std::size_t> const reel_sizes = {2, 3, 4};
+    std::vector<std::vector<std::size_t>> const expected_indices = {
         {0,0,0}, {0,0,1}, {0,0,2}, {0,0,3},
         {0,1,0}, {0,1,1}, {0,1,2}, {0,1,3},
         {0,2,0}, {0,2,1}, {0,2,2}, {0,2,3},
@@ -75,18 +75,18 @@ TEST(IterationTest, MultiReelsIteration) {
         {1,2,0}, {1,2,1}, {1,2,2}, {1,2,3},
     };
     auto i = 0uz;
-    for (auto indices : iterate(reel_sizes)) {
+    for (auto const& indices : iterate(reel_sizes)) {
         EXPECT_EQ(expected_indices[i], indices);
         ++i;
     }
 }
 
 TEST(IterationTest, MultiReelsAtomicIteration) {
-    auto const num_threads = 4;
+    constexpr auto num_threads = 4;
     iterate_atomic ia;
     std::latch start_latch(num_threads), end_latch(num_threads);
     std::vector<std::vector<std::vector<std::size_t>>> iterations(num_threads);
-    std::vector<std::size_t> reel_sizes = {2, 3, 4};
+    std::vector<std::size_t> const reel_sizes = {2, 3, 4};
     auto thread_local_iterator = [&](std::size_t const i) {
         auto& visited = iterations[i];
         start_latch.arrive_and_wait();

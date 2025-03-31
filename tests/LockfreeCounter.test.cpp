@@ -23,8 +23,7 @@ TEST_P(LockfreeCounterTestSuite, ConcurrencyTest)
         end_latch.count_down();
     };
 
-    std::vector<std::jthread> threads(num_threads);
-    for (auto& thread : threads)
+    for (std::vector<std::jthread> threads(num_threads); auto& thread : threads)
         thread = std::jthread(incrementer, repeat);
     end_latch.wait(); // enforces a precondition: no thread is modifying counter while converting to std::unordered_map
     auto const dict = static_cast<Counter::unordered_map>(counter);
