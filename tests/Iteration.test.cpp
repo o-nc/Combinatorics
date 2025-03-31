@@ -107,7 +107,7 @@ TEST(IterationTest, MultiReelsAtomicIteration) {
         for (auto& indices : iteration)
             all_iterations.push_back(std::move(indices));
     std::ranges::sort(all_iterations);
-    std::vector<std::vector<std::size_t>> expected_indices = {
+    std::vector<std::vector<std::size_t>> const expected_indices = {
         {0,0,0}, {0,0,1}, {0,0,2}, {0,0,3},
         {0,1,0}, {0,1,1}, {0,1,2}, {0,1,3},
         {0,2,0}, {0,2,1}, {0,2,2}, {0,2,3},

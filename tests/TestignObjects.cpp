@@ -46,17 +46,20 @@ constexpr std::size_t scattered = (1 << 11) | (1 << 12);
 
 Display display_base(reels_1_5, heights, scattered);
 Display display_free(reels_6_10, heights, scattered);
+Paylines paylines_base{{{0,3,6,9, 12}}};
+constexpr std::size_t bet_base = 50;
+Game<5> game_base(paylines_base, display_base, bet_base);
 
 
 // testing objects for a small toy game
 
-Symbol const& s13 = Symbol::get(13, {0, 0, 1, 5});
-Symbol const& s14 = Symbol::get(14, {0, 0, 1, 5});
-Symbol const& s15 = Symbol::get(15, {0, 0, 2, 10});
-Symbol const& s16 = Symbol::get(16, {0, 0, 3, 15}, {}, true);
+Symbol const& s13 = Symbol::get(13, {0, 0, 0, 1, 5});
+Symbol const& s14 = Symbol::get(14, {0, 0, 0, 1, 5});
+Symbol const& s15 = Symbol::get(15, {0, 0, 0, 2, 10});
+Symbol const& s16 = Symbol::get(16, {0, 0, 0, 3, 15}, {}, true);
 
 Reel reel11(createStops({13,14,15,16}, {1,1,1,1}));
-Reel reel12(createStops({13,14,15,16,14,13,15,14}, {3,3,2,1,3,3,2,3}));
+Reel reel12(createStops({14,13,15,16,13,14,15,13}, {3,3,2,1,3,3,2,3}));
 Reel reel13(createStops({13,14,15,16}, {3,3,2,1}));
 Reel reel14(createStops({13,14,15,16}, {3,3,2,1}));
 Reels reels_small {std::move(reel11), std::move(reel12), std::move(reel13), std::move(reel14)};
@@ -65,6 +68,6 @@ constexpr std::size_t scattered_small = (1 << 16);
 Display::Heights const heights_small(4, 3); // five reels, each of height three
 Display display_small(reels_small, heights_small, scattered_small);
 
-Game::Paylines paylines_small{{{0,3,6,9}},{{1,4,7,8}},{{2,5,8,10}},{{1,3,6,9}},{{0,3,7,9}}};
-constexpr std::size_t bet_small = 5;
-Game game_small(paylines_small, display_small, bet_small);
+Paylines paylines_small{{{0,3,6,9}}};
+constexpr std::size_t bet_small = 1;
+Game<4> game_small(paylines_small, display_small, bet_small);

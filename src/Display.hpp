@@ -35,14 +35,30 @@ namespace combis {
       	Display(Reels& reels, Heights const& heights, Scattered const scattered)
             : reels(reels), heights(heights), scattered(scattered), display_size(std::accumulate(heights.cbegin(), heights.cend(), 1uz)) {}
 
-        std::pair<Symbol const&, weight const&> operator[](position const& p, std::vector<std::size_t> const& reels_stops = {}) const {
+        Symbol const& operator[](position const& p, std::vector<std::size_t> const& reels_stops = {}) const {
         	auto const [reel_index, display_offset] = reel_index_offset(p);
         	// keep the current position of all reels at 0, but change their position with an argument.
         	// make the reels' accesses thread-safe by getting rid of the shared data.
         	std::size_t const  reel_offset = reels_stops.empty() ? 0uz : reels_stops[reel_index];
-        	// as the stop chosen is at offset 0, we must use the weight at offset 0, not the weight at the offset of the symbol
-            return {reels[reel_index][reel_offset + display_offset].s, reels[reel_index][reel_offset].w};
+            return reels[reel_index][reel_offset + display_offset].s;
         }
+
+    	std::vector<std::size_t> get_reels_sizes() const {
+      		std::vector<std::size_t> reel_sizes;
+      		reel_sizes.reserve(reels.size());
+      		for (auto const& reel : reels)
+      			reel_sizes.push_back(reel.size());
+      		return reel_sizes;
+      	}
+    	weight get_weight(std::vector<std::size_t> const& reels_stops) const {
+      		weight w = 1uz;
+      		for (auto i = 0uz; i < reels.size(); ++i)
+      			w *= reels[i][reels_stops[i]].w;
+      		return w;
+      	}
+    	weight get_total_weight() const {
+      		return std::accumulate(reels.cbegin(), reels.cend(), 1uz, [](weight const& acc, Reel const& reel) { return acc * reel.total_weight; });
+      	}
     };
 
 }

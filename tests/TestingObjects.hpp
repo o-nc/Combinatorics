@@ -17,13 +17,14 @@ extern combis::Symbol const& s11;
 extern combis::Symbol const& s12;
 
 extern combis::Display display_base, display_free;
+extern combis::Game<5> game_base;
 
 extern combis::Symbol const& s13;
 extern combis::Symbol const& s14;
 extern combis::Symbol const& s15;
 extern combis::Symbol const& s16;
 extern combis::Display display_small;
-extern combis::Game game_small;
+extern combis::Game<4> game_small;
 
 
 #endif

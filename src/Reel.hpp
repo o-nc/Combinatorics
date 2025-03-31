@@ -14,7 +14,7 @@ namespace combis {
         Symbol const& s;
         weight const w;
         explicit Stop(Symbol const& s, weight const w = 1) : s(s), w(w) {}
-        explicit Stop(std::size_t const s, weight const w = 1) : s(Symbol::get(s)), w(1) {}
+        explicit Stop(std::size_t const s, weight const w = 1) : s(Symbol::get(s)), w(w) {}
         bool operator==(Stop const& other) const { return s == other.s and w == other.w; }
     };
     using Stops = std::vector<Stop>;
@@ -34,6 +34,7 @@ namespace combis {
         weight const total_weight;
         explicit Reel(Stops const& stops) : stops(stops), total_weight(std::accumulate(stops.cbegin(), stops.cend(), 0, [](weight const& acc, Stop const& s) { return acc + s.w; })) {}
         Stop const& operator[](std::size_t const offset) const { return stops[(offset) % stops.size()]; }
+        std::size_t size() const { return stops.size(); }
     };
     using Reels = std::vector<Reel>;
 

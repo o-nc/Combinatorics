@@ -3,7 +3,9 @@ project(Combinatorics)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_library(Combinatorics STATIC library.cpp)
+add_library(Combinatorics STATIC
+        src/Iteration.cpp
+)
 target_include_directories(Combinatorics PUBLIC include
         ${PROJECT_SOURCE_DIR}/src)
 
@@ -15,7 +17,8 @@ add_executable(unittests
         tests/Reel.test.cpp
         tests/Display.test.cpp
         tests/TestignObjects.cpp
-        tests/Payline.test.cpp)
+        tests/Payline.test.cpp
+        tests/Game.test.cpp)
 target_link_libraries(unittests gtest gtest_main Combinatorics)
 target_include_directories(unittests PUBLIC include
         ${PROJECT_SOURCE_DIR}/src
