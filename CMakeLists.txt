@@ -14,7 +14,8 @@ add_executable(unittests
         tests/Symbol.test.cpp
         tests/Reel.test.cpp
         tests/Display.test.cpp
-        tests/TestignObjects.cpp)
+        tests/TestignObjects.cpp
+        tests/Payline.test.cpp)
 target_link_libraries(unittests gtest gtest_main Combinatorics)
 target_include_directories(unittests PUBLIC include
         ${PROJECT_SOURCE_DIR}/src
